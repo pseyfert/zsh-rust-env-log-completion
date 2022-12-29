@@ -1,0 +1,13 @@
+#compdef -value-,RUST_LOG,-default-
+
+# TODO: I don't think I can suggest modules, but the , suffix could be improved.
+#       Like RUST_LOG=mod1=warn,⇥ shouldn't suggest other warn levels for mod1.
+#       I.e. I don't think _values is the right starting point, and maybe i could
+#       `YOURMODULE=` to the suggestions.
+
+if compset -P '*='; then
+  curr_mod=${${IPREFIX##*,}%=}
+  _values -s , "log level for module $curr_mod (or specify next module)" error warn info debug trace
+else
+  _values -s , 'global log level (or specify module)' error warn info debug trace
+fi
